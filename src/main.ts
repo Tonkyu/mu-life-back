@@ -1,5 +1,6 @@
 import express from 'express';
 
+require('dotenv').config();
 const app = express()
 
 app.use(function(req, res, next) {
@@ -17,6 +18,16 @@ app.use(express.urlencoded({ extended: true }))
 app.get('/', (req, res) => {
     res.status(200).send({ message: 'hello, api sever!' })
 })
+
+app.get("/api/recommend-music", function (req, res) {
+  const day = req.body.day;
+  const month = req.body.month;
+  const weather = req.body.weather;
+  const location = req.body.location;
+  console.log(process.env.OPENAI_API_KEY);
+  console.log("aiu");
+  res.status(200).send({ message: process.env.OPENAI_API_KEY })
+});
 
 // サーバー接続
 const port = process.env.PORT || 3001
