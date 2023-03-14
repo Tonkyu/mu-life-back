@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
     res.status(200).send({ message: 'hello, api sever!' })
 })
 
-app.get("/api/recommend-music", function (req, res) {
+app.post("/api/recommend-music", function (req, res) {
 
   const configuration = new Configuration({
     apiKey: process.env.OPENAI_API_KEY,
