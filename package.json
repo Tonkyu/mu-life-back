@@ -4,17 +4,18 @@
   "description": "",
   "main": "dist/main.js",
   "engines": {
-      "node": "16.18.x",
-      "npm": "8.19.2"
+    "node": "16.18.x",
+    "npm": "8.19.2"
   },
   "scripts": {
-      "start": "node dist/main.js",
-      "dev": "nodemon dist/main.js"
+    "start": "node dist/main.js",
+    "dev": "nodemon dist/main.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.0.3",
     "express": "^4.18.2"
   },
   "devDependencies": {

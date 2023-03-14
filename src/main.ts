@@ -26,7 +26,7 @@ app.get("/api/recommend-music", function (req, res) {
   const location = req.body.location;
   console.log(process.env.OPENAI_API_KEY);
   console.log("aiu");
-  res.status(200).send({ message: process.env.OPENAI_API_KEY })
+  res.status(200).send({ message: process.env.OPENAI_API_KEY });
 });
 
 // サーバー接続
