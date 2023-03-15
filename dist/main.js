@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 require('dotenv').config();
+const cors = require('cors');
 const app = (0, express_1.default)();
 const { Configuration, OpenAIApi } = require("openai");
 app.use(function (req, res, next) {
@@ -35,23 +36,18 @@ app.post("/api/recommend", function (req, res) {
     const weather = "晴れ";
     const location = "代々木公園";
     const question_text = month + "月" + day + "日の" + weather + "の日に" + location + "で聴くのにぴったりな5曲の日本の楽曲をJSON形式で教えてください。それぞれの楽曲に対して、キーはartistとtitleの2つとしなさい。artistには歌手名を、titleには楽曲名を入れなさい。";
-    var response = "default";
     const requestFunc = async () => {
+        console.log("かきく");
         await openai.createChatCompletion({
             model: "gpt-3.5-turbo",
             messages: [{ role: "user", content: question_text }],
         }).then((response) => {
             const answer_text = response.data.choices[0].message.content;
-            try {
-                const answer_json = JSON.parse(answer_text);
-                console.log(answer_json);
-                res.status(200).send(answer_json);
-            }
-            catch (error) {
-                console.log("Error: failed to parse the openai response");
-            }
+            console.log(answer_text);
+            res.status(200).send(answer_text);
         });
     };
+    console.log("さしす");
     requestFunc();
 });
 app.get('/api/recommend-dummy', (req, res) => {
@@ -63,16 +59,9 @@ app.post("/api/recommend-dummy", function (req, res) {
     });
     const openai = new OpenAIApi(configuration);
     const requestFunc = async () => {
-        const answer_text = "dummy-answer";
-        try {
-            const answer_json = JSON.parse(answer_text);
-            console.log(answer_json);
-            res.status(200).send(answer_json);
-        }
-        catch (error) {
-            console.log("Error: failed to parse the openai response");
-        }
-        ;
+        const answer_text = '{"text": "dummy-answer"}';
+        console.log(answer_text);
+        res.status(200).send(answer_text);
     };
     requestFunc();
 });
