@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 require('dotenv').config();
-const cors = require('cors');
 const app = (0, express_1.default)();
 const { Configuration, OpenAIApi } = require("openai");
 app.use(function (req, res, next) {
@@ -37,7 +36,7 @@ app.post("/api/recommend", function (req, res) {
     const location = "代々木公園";
     const question_text = month + "月" + day + "日の" + weather + "の日に" + location + "で聴くのにぴったりな5曲の日本の楽曲をJSON形式で教えてください。それぞれの楽曲に対して、キーはartistとtitleの2つとしなさい。artistには歌手名を、titleには楽曲名を入れなさい。";
     const requestFunc = async () => {
-        console.log("かきく");
+        // console.log("かきく");
         await openai.createChatCompletion({
             model: "gpt-3.5-turbo",
             messages: [{ role: "user", content: question_text }],
@@ -47,7 +46,7 @@ app.post("/api/recommend", function (req, res) {
             res.status(200).send(answer_text);
         });
     };
-    console.log("さしす");
+    // console.log("さしす");
     requestFunc();
 });
 app.get('/api/recommend-dummy', (req, res) => {
