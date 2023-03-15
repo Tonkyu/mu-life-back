@@ -29,10 +29,6 @@ app.post("/api/recommend", function (req, res) {
         apiKey: process.env.OPENAI_API_KEY,
     });
     const openai = new OpenAIApi(configuration);
-    // const month = req.body.month;
-    // const day = req.body.day;
-    // const weather = req.body.weather;
-    // const location = req.body.location;
     console.log("api");
     const month = 3;
     const day = 3;
@@ -55,6 +51,25 @@ app.post("/api/recommend", function (req, res) {
                 console.log("Error: failed to parse the openai response");
             }
         });
+    };
+    requestFunc();
+});
+app.post("/api/recommend-dummy", function (req, res) {
+    const configuration = new Configuration({
+        apiKey: process.env.OPENAI_API_KEY,
+    });
+    const openai = new OpenAIApi(configuration);
+    const requestFunc = async () => {
+        const answer_text = "dummy-answer";
+        try {
+            const answer_json = JSON.parse(answer_text);
+            console.log(answer_json);
+            res.status(200).send(answer_json);
+        }
+        catch (error) {
+            console.log("Error: failed to parse the openai response");
+        }
+        ;
     };
     requestFunc();
 });
