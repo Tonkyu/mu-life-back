@@ -9,9 +9,9 @@ const app = (0, express_1.default)();
 const { Configuration, OpenAIApi } = require("openai");
 app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
-    res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
-    res.header('Access-Control-Max-Age', '86400');
+    // res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
+    // res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
+    // res.header('Access-Control-Max-Age', '86400');
     next();
 });
 // jsonデータを扱う
@@ -53,6 +53,9 @@ app.post("/api/recommend", function (req, res) {
         });
     };
     requestFunc();
+});
+app.get('/api/recommend-dummy', (req, res) => {
+    res.status(200).send({ message: 'hello, api sever! this is api/recommend-dummy' });
 });
 app.post("/api/recommend-dummy", function (req, res) {
     const configuration = new Configuration({
