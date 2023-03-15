@@ -21,6 +21,9 @@ app.use(express_1.default.urlencoded({ extended: true }));
 app.get('/', (req, res) => {
     res.status(200).send({ message: 'hello, api sever!' });
 });
+app.get('/api/recommend', (req, res) => {
+    res.status(200).send({ message: 'hello, api sever! this is api/recommend' });
+});
 app.post("/api/recommend", function (req, res) {
     const configuration = new Configuration({
         apiKey: process.env.OPENAI_API_KEY,

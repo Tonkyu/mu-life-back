@@ -13,12 +13,16 @@ app.use(function(req, res, next) {
   next();
 });
 // jsonデータを扱う
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // テスト用のエンドポイント
 app.get('/', (req, res) => {
-    res.status(200).send({ message: 'hello, api sever!' })
+    res.status(200).send({ message: 'hello, api sever!' });
+})
+
+app.get('/api/recommend', (req, res) => {
+  res.status(200).send({ message: 'hello, api sever! this is api/recommend'});
 })
 
 app.post("/api/recommend", function (req, res) {
