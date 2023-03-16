@@ -58,7 +58,7 @@ app.post("/api/recommend-dummy", function (req, res) {
     });
     const openai = new OpenAIApi(configuration);
     const requestFunc = async () => {
-        const answer_text = '{"text": "dummy-answer"}';
+        const answer_text = '[{"artist":"山下達郎","title":"クリスマス・イブ"},{"artist":"松任谷由実","title":"春よ、来い"},{"artist":"サザンオールスターズ","title":"TSUNAMI"},{"artist":"Mr.Children","title":"Tomorrow never knows"},{"artist":"桑田佳祐","title":"よろしくお願いします"}]';
         console.log(answer_text);
         res.status(200).send(answer_text);
     };
