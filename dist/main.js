@@ -8,6 +8,22 @@ const make_playlist_1 = __importDefault(require("./make_playlist"));
 require('dotenv').config();
 const app = (0, express_1.default)();
 const { Configuration, OpenAIApi } = require("openai");
+const res_obj = {
+    success: true,
+    songs: [
+        { artist: '米津玄師', title: 'Lemon' },
+        { artist: 'SEKAI NO OWARI', title: 'RPG' },
+        { artist: '大塚愛', title: 'さくらんぼ' },
+        { artist: 'さだまさし', title: '関白宣言' },
+        { artist: 'TWICE', title: 'TT' },
+    ]
+};
+const req_obj = {
+    day: "20",
+    location: "常盤二丁目",
+    month: "3",
+    weather: "薄い雲"
+};
 app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
@@ -99,15 +115,21 @@ app.get('/api/recommend-dummy', (req, res) => {
 });
 app.post("/api/recommend-dummy", function (req, res) {
     const requestFunc = async () => {
-        const answer_text = '[{"artist":"山下達郎","title":"クリスマス・イブ"},{"artist":"松任谷由実","title":"春よ、来い"},{"artist":"サザンオールスターズ","title":"TSUNAMI"},{"artist":"Mr.Children","title":"Tomorrow never knows"},{"artist":"桑田佳祐","title":"白い恋人達"}]';
-        console.log(answer_text);
-        res.status(200).send(answer_text);
+        console.log(res_obj);
+        res.status(200).send(res_obj);
     };
     requestFunc();
 });
 app.get("/api/spotify", function (req, res) {
-    const ans = (0, make_playlist_1.default)();
-    res.status(200).send(ans);
+    // const req_obj = req.
+    // const res_obj = res.
+    (0, make_playlist_1.default)(req_obj, res_obj)
+        .then((val) => {
+        console.log("--------------");
+        console.log(val);
+        console.log("--------------");
+        res.status(200).send(val);
+    });
 });
 // サーバー接続
 const port = process.env.PORT || 3001;
