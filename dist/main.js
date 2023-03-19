@@ -30,13 +30,15 @@ app.post("/api/recommend", function (req, res) {
     });
     const openai = new OpenAIApi(configuration);
     console.log("api");
-    const month = 3;
-    const day = 3;
-    const weather = "晴れ";
-    const location = "代々木公園";
-    const question_text = month + "月" + day + "日の" + weather + "の日に" + location + "で聴くのにぴったりな5曲の日本の楽曲をJSON形式で教えてください。それぞれの楽曲に対して、キーはartistとtitleの2つとしなさい。artistには歌手名を、titleには楽曲名を入れなさい。";
+    const month = req.body.month;
+    const day = req.body.day;
+    const weather = req.body.weather;
+    const location = req.body.location;
+    const question_text = `${month}月${day}日の${weather}の日に${location}で聴くのにぴったりな5曲の日本の楽曲をJSON形式で答えなさい。\n\
+                      それぞれの楽曲に対して、キーはartistとtitleの2つとしなさい。artistには歌手名を、titleには楽曲名を入れなさい。\n\
+                      例えば、以下の形式に沿って回答しなさい。:\n\
+                      [{"artist":"山下達郎","title":"クリスマス・イブ"},{"artist":"松任谷由実","title":"春よ、来い"},{"artist":"サザンオールスターズ","title":"TSUNAMI"},{"artist":"Mr.Children","title":"Tomorrow never knows"},{"artist":"桑田佳祐","title":"白い恋人達"}]`;
     const requestFunc = async () => {
-        // console.log("かきく");
         await openai.createChatCompletion({
             model: "gpt-3.5-turbo",
             messages: [{ role: "user", content: question_text }],
@@ -46,7 +48,6 @@ app.post("/api/recommend", function (req, res) {
             res.status(200).send(answer_text);
         });
     };
-    // console.log("さしす");
     requestFunc();
 });
 app.get('/api/recommend-dummy', (req, res) => {
@@ -56,9 +57,8 @@ app.post("/api/recommend-dummy", function (req, res) {
     const configuration = new Configuration({
         apiKey: process.env.OPENAI_API_KEY,
     });
-    const openai = new OpenAIApi(configuration);
     const requestFunc = async () => {
-        const answer_text = '[{"artist":"山下達郎","title":"クリスマス・イブ"},{"artist":"松任谷由実","title":"春よ、来い"},{"artist":"サザンオールスターズ","title":"TSUNAMI"},{"artist":"Mr.Children","title":"Tomorrow never knows"},{"artist":"桑田佳祐","title":"よろしくお願いします"}]';
+        const answer_text = '[{"artist":"山下達郎","title":"クリスマス・イブ"},{"artist":"松任谷由実","title":"春よ、来い"},{"artist":"サザンオールスターズ","title":"TSUNAMI"},{"artist":"Mr.Children","title":"Tomorrow never knows"},{"artist":"桑田佳祐","title":"白い恋人達"}]';
         console.log(answer_text);
         res.status(200).send(answer_text);
     };
