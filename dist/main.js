@@ -111,6 +111,7 @@ app.post("/api/recommend", async function (req, res) {
     res.status(200).send(return_obj);
 });
 app.get('/api/recommend-dummy', (req, res) => {
+    console.log("api/recommend");
     res.status(200).send({ message: 'hello, api sever! this is api/recommend-dummy' });
 });
 app.post("/api/recommend-dummy", function (req, res) {
@@ -120,15 +121,24 @@ app.post("/api/recommend-dummy", function (req, res) {
     };
     requestFunc();
 });
-app.get("/api/spotify", function (req, res) {
+app.post("/api/spotify", function (req, res) {
     // const req_obj = req.
     // const res_obj = res.
+    console.log("/api/spotify");
     (0, make_playlist_1.default)(req_obj, res_obj)
-        .then((val) => {
+        .then((data) => {
         console.log("--------------");
-        console.log(val);
+        console.log(data);
         console.log("--------------");
-        res.status(200).send(val);
+        res.status(200).send({
+            success: true,
+            data: data
+        });
+    }).catch((e) => {
+        res.status(200).send({
+            success: false,
+            data: "NoURI"
+        });
     });
 });
 // サーバー接続

@@ -14,15 +14,7 @@ const MakePlaylist = async (req: any, res:any) => {
             .then((val: any) => {
               return val.tracks;
             }).then((tracks: any) => {
-              const extract_info = (track: any) => {
-                const info =  {
-                  id: track.id,
-                  title: track.name,
-                  uri: track.uri
-                };
-                return info;
-              }
-              return extract_info(tracks[0]);
+              return tracks[0];
             })
       })
       return Promise.all(songs.map(async (song: any) => await get(song)));
@@ -31,12 +23,24 @@ const MakePlaylist = async (req: any, res:any) => {
   }
 
   return SearchSongs(songs)
-  .then(async infos => infos.map(info => info.uri))
-  .then(async (uris) => {
+  .then(async tracks => {
+    const uris = tracks.map(track => track.uri)
     const name = `${req.month}月${req.day}日の${req.weather}の日に${req.location}で聴くためのプレイリスト`
-    const playlist = await client.playlists.create('ton_q', { name: name });
+    const spotify_tonq_bot  = "31ein4zwheierebmzdqpw6nhbubi";
+    const playlist = await (async () => {
+      try{
+        return client.playlists.create(spotify_tonq_bot, { name: name });
+      }
+      catch (e) {
+        return {id: "None"};
+      }
+    })();
+    console.log(playlist)
     await client.playlists.addItems(playlist.id, uris)
-    return playlist.uri;
+    return {
+      playlist_id: playlist.id,
+      tracks: tracks
+    }
   })
 }
 
