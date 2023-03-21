@@ -42,7 +42,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/api/recommend', (req, res) => {
-  res.status(200).send({ message: 'hello, api sever! this is api/recommend'});
+  res.status(200).send({ message: `hello, api sever! this is api/recommend\n ACCESS_TOKEN:${process.env.OPEN_API_KEY}`});
 })
 
 
@@ -105,7 +105,8 @@ app.post("/api/recommend", async function (req, res) {
                             success: true,
                             songs: await requestFunc()
                           }
-                        } catch {
+                        } catch (e){
+                          console.log(e);
                           return {
                             success: false,
                             songs: []
