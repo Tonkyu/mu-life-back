@@ -1,5 +1,6 @@
 const { Client } = require("spotify-api.js");
 
+require('dotenv').config();
 const MakePlaylist = async (req: any, res:any) => {
   const client = await Client.create({token: { clientID: process.env.SPOTIFY_CLIENT_ID, clientSecret: process.env.SPOTIFY_CLIENT_SECRET, refreshToken: process.env.SPOTIFY_REFRESH_TOKEN }, userAuthorizedToken: true});
   const songs = res.songs;

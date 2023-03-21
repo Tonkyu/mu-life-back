@@ -111,7 +111,7 @@ app.post("/api/recommend", async function (req, res) {
     res.status(200).send(return_obj);
 });
 app.get('/api/recommend-dummy', (req, res) => {
-    console.log("api/recommend");
+    console.log("api/recommend-dummy");
     res.status(200).send({ message: 'hello, api sever! this is api/recommend-dummy' });
 });
 app.post("/api/recommend-dummy", function (req, res) {
@@ -122,8 +122,6 @@ app.post("/api/recommend-dummy", function (req, res) {
     requestFunc();
 });
 app.post("/api/spotify", function (req, res) {
-    // const req_obj = req.
-    // const res_obj = res.
     console.log("/api/spotify");
     (0, make_playlist_1.default)(req_obj, res_obj)
         .then((data) => {
