@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const make_playlist_1 = __importDefault(require("./make_playlist"));
-require('dotenv').config();
+// require('dotenv').config();
 const app = (0, express_1.default)();
 const { Configuration, OpenAIApi } = require("openai");
 const res_obj = {

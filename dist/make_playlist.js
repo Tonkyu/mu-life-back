@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const { Client } = require("spotify-api.js");
-require('dotenv').config();
+// require('dotenv').config();
 const MakePlaylist = async (req, res) => {
     const client = await Client.create({ token: { clientID: process.env.SPOTIFY_CLIENT_ID, clientSecret: process.env.SPOTIFY_CLIENT_SECRET, refreshToken: process.env.SPOTIFY_REFRESH_TOKEN }, userAuthorizedToken: true });
     const songs = res.songs;

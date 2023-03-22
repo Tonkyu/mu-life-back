@@ -1,7 +1,7 @@
 import express from 'express';
 import MakePlaylist from './make_playlist'
 
-require('dotenv').config();
+// require('dotenv').config();
 const app = express();
 
 const { Configuration, OpenAIApi } = require("openai");
