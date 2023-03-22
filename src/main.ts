@@ -1,7 +1,6 @@
 import express from 'express';
 import MakePlaylist from './make_playlist'
 
-// require('dotenv').config();
 const app = express();
 
 const { Configuration, OpenAIApi } = require("openai");
@@ -42,7 +41,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/api/recommend', (req, res) => {
-  res.status(200).send({ message: `hello, api sever! this is api/recommend\n ACCESS_TOKEN:${process.env.OPEN_API_KEY}`});
+  res.status(200).send({ message: `hello, api sever! this is api/recommend\n ACCESS_TOKEN:${process.env.OPENAI_API_KEY}`});
 })
 
 

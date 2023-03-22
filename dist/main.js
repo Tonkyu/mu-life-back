@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const make_playlist_1 = __importDefault(require("./make_playlist"));
-// require('dotenv').config();
 const app = (0, express_1.default)();
 const { Configuration, OpenAIApi } = require("openai");
 const res_obj = {
@@ -39,7 +38,7 @@ app.get('/', (req, res) => {
     res.status(200).send({ message: 'hello, api sever!' });
 });
 app.get('/api/recommend', (req, res) => {
-    res.status(200).send({ message: `hello, api sever! this is api/recommend\n ACCESS_TOKEN:${process.env.OPEN_API_KEY}` });
+    res.status(200).send({ message: `hello, api sever! this is api/recommend\n ACCESS_TOKEN:${process.env.OPENAI_API_KEY}` });
 });
 app.post("/api/recommend", async function (req, res) {
     const configuration = new Configuration({
