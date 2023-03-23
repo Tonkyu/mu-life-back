@@ -51,14 +51,14 @@ app.post("/api/recommend", async function (req, res) {
     const day = req.body.day;
     const weather = req.body.weather;
     const location = req.body.location;
-    const question_text = `${month}月${day}日の${weather}の日に${location}で聴くのにぴったりな5曲の日本の楽曲をJSON形式で答えなさい。\n\
+    const question_songs_text = `${month}月${day}日の${weather}の日に${location}で聴くのにぴったりな5曲の日本の楽曲をJSON形式で答えなさい。\n\
                       それぞれの楽曲に対して、キーはartistとtitleの2つとしなさい。artistには歌手名を、titleには楽曲名を入れなさい。\n\
                       例えば、以下の形式に沿って回答しなさい。:\n\
                       [{"artist":"山下達郎","title":"クリスマス・イブ"},{"artist":"松任谷由実","title":"春よ、来い"},{"artist":"サザンオールスターズ","title":"TSUNAMI"},{"artist":"Mr.Children","title":"Tomorrow never knows"},{"artist":"桑田佳祐","title":"白い恋人達"}]`;
-    const requestFunc = async () => {
+    const requestSongs = async () => {
         return await openai.createChatCompletion({
             model: "gpt-3.5-turbo",
-            messages: [{ role: "user", content: question_text }],
+            messages: [{ role: "user", content: question_songs_text }],
         }).then((response) => {
             const answer_text = response.data.choices[0].message.content;
             function formatToSongs(_songs_json) {
@@ -88,27 +88,38 @@ app.post("/api/recommend", async function (req, res) {
                 }
             }
             const res = formatToSongs(answer_text);
-            return res;
-        }).then((val) => {
-            return val;
+            return { text: answer_text, json: res };
         });
     };
+    const res_songs = await requestSongs();
+    const question_reason_text = `そのように考えた理由を、季節や場所の特徴の観点から教えてください`;
+    const requestReason = async () => {
+        return await openai.createChatCompletion({
+            model: "gpt-3.5-turbo",
+            messages: [{ role: "user", content: question_songs_text },
+                { role: "assistant", content: res_songs.text },
+                { role: "user", content: question_reason_text }],
+        }).then((response) => response.data.choices[0].message.content);
+    };
+    const res_reason = await requestReason();
     const return_obj = await (async () => {
         try {
             return {
                 success: true,
-                songs: await requestFunc()
+                songs: res_songs.json,
+                reason: res_reason
             };
         }
         catch (e) {
             console.log(e);
             return {
                 success: false,
-                songs: []
+                songs: [],
+                reason: "NoReason"
             };
         }
     })();
-    console.log(return_obj);
+    // console.log(return_obj);
     res.status(200).send(return_obj);
 });
 app.get('/api/recommend-dummy', (req, res) => {
