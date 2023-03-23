@@ -35,8 +35,11 @@ const MakePlaylist = async (req: any, res:any) => {
         return {id: "None"};
       }
     })();
-    console.log(playlist)
-    await client.playlists.addItems(playlist.id, uris)
+    return {playlist, uris, tracks};
+  }).then(async ({playlist, uris, tracks}) => {
+    await client.playlists.addItems(playlist.id, uris);
+    return {playlist, tracks};
+  }).then(({playlist, tracks}) => {
     return {
       playlist_id: playlist.id,
       tracks: tracks
