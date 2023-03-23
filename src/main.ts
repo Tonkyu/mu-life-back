@@ -2,7 +2,7 @@ import express from 'express';
 import MakePlaylist from './make_playlist'
 
 const app = express();
-
+require('dotenv').config();
 const { Configuration, OpenAIApi } = require("openai");
 
 const res_obj = {
@@ -47,7 +47,7 @@ app.get('/api/recommend', (req, res) => {
 
 app.post("/api/recommend", async function (req, res) {
   const configuration = new Configuration({
-    apiKey: process.env.OPEN_API_KEY,
+    apiKey: process.env.OPENAI_API_KEY,
   });
   const openai = new OpenAIApi(configuration);
   console.log("api");

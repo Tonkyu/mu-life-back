@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const make_playlist_1 = __importDefault(require("./make_playlist"));
 const app = (0, express_1.default)();
+require('dotenv').config();
 const { Configuration, OpenAIApi } = require("openai");
 const res_obj = {
     success: true,
@@ -42,7 +43,7 @@ app.get('/api/recommend', (req, res) => {
 });
 app.post("/api/recommend", async function (req, res) {
     const configuration = new Configuration({
-        apiKey: process.env.OPEN_API_KEY,
+        apiKey: process.env.OPENAI_API_KEY,
     });
     const openai = new OpenAIApi(configuration);
     console.log("api");
