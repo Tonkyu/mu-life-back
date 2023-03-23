@@ -124,7 +124,7 @@ app.post("/api/recommend-dummy", function (req, res) {
 });
 app.post("/api/spotify", function (req, res) {
     console.log("/api/spotify");
-    (0, make_playlist_1.default)(req.body.request, req.body.res)
+    const playlist = (0, make_playlist_1.default)(req.body.request, req.body.res)
         .then((data) => {
         console.log("--------------");
         console.log(data);
