@@ -119,6 +119,7 @@ app.post("/api/recommend", async function (req, res) {
   };
 
   const res_songs = await requestSongs();
+  console.log(res_songs);
 
   const question_reason_text = `そのように考えた理由を、季節や場所の特徴の観点から教えてください`;
 
@@ -128,9 +129,9 @@ app.post("/api/recommend", async function (req, res) {
       messages: [{role:"user", content: question_songs_text},
                   {role: "assistant", content: res_songs.text},
                   {role: "user", content: question_reason_text}],
+      temperature: 0
     }).then((response: any) => response.data.choices[0].message.content);
   };
-
   const res_reason = await requestReason();
   const return_obj = await (async () => {
                         try {
