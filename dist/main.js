@@ -8,6 +8,28 @@ const make_playlist_1 = __importDefault(require("./make_playlist"));
 const app = (0, express_1.default)();
 require('dotenv').config();
 const { Configuration, OpenAIApi } = require("openai");
+var { Client } = require('pg');
+const client = new Client({
+    connectionString: process.env.DB_URL,
+    ssl: {
+        rejectUnauthorized: false
+    }
+});
+client.connect();
+const query = {
+    text: 'select * from first_db;'
+};
+client.query(query, (err, res) => {
+    if (err) {
+        console.log(err.stack);
+    }
+    else {
+        console.log("-----------");
+        console.log("postgres");
+        console.log(res.rows[0]);
+        console.log("-----------");
+    }
+});
 const res_obj = {
     success: true,
     songs: [
@@ -16,7 +38,8 @@ const res_obj = {
         { artist: '大塚愛', title: 'さくらんぼ' },
         { artist: 'さだまさし', title: '関白宣言' },
         { artist: 'TWICE', title: 'TT' },
-    ]
+    ],
+    reason: "理由理由"
 };
 const req_obj = {
     day: "20",
@@ -119,7 +142,7 @@ app.post("/api/recommend", async function (req, res) {
             };
         }
     })();
-    // console.log(return_obj);
+    console.log("open ai status: " + return_obj.success);
     res.status(200).send(return_obj);
 });
 app.get('/api/recommend-dummy', (req, res) => {
@@ -135,7 +158,7 @@ app.post("/api/recommend-dummy", function (req, res) {
 });
 app.post("/api/spotify", function (req, res) {
     console.log("/api/spotify");
-    const playlist = (0, make_playlist_1.default)(req.body.request, req.body.res)
+    const playlist = (0, make_playlist_1.default)(req.body.request, req.body.res, client)
         .then((data) => {
         console.log("--------------");
         console.log(data);
