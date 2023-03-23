@@ -39,7 +39,7 @@ app.get('/', (req, res) => {
     res.status(200).send({ message: 'hello, api sever!' });
 });
 app.get('/api/recommend', (req, res) => {
-    res.status(200).send({ message: `hello, api sever! this is api/recommend\n ACCESS_TOKEN:${process.env.OPENAI_API_KEY}` });
+    res.status(200).send({ message: `hello, api sever! this is api/recommend` });
 });
 app.post("/api/recommend", async function (req, res) {
     const configuration = new Configuration({
@@ -124,7 +124,7 @@ app.post("/api/recommend-dummy", function (req, res) {
 });
 app.post("/api/spotify", function (req, res) {
     console.log("/api/spotify");
-    (0, make_playlist_1.default)(req_obj, res_obj)
+    (0, make_playlist_1.default)(req.body.request, req.body.res)
         .then((data) => {
         console.log("--------------");
         console.log(data);

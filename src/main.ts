@@ -41,7 +41,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/api/recommend', (req, res) => {
-  res.status(200).send({ message: `hello, api sever! this is api/recommend\n ACCESS_TOKEN:${process.env.OPENAI_API_KEY}`});
+  res.status(200).send({ message: `hello, api sever! this is api/recommend`});
 })
 
 
@@ -133,7 +133,7 @@ app.post("/api/recommend-dummy", function (req, res) {
 
 app.post("/api/spotify", function(req, res) {
   console.log("/api/spotify")
-  MakePlaylist(req_obj, res_obj)
+  MakePlaylist(req.body.request, req.body.res)
   .then((data) => {
     console.log("--------------")
     console.log(data)
